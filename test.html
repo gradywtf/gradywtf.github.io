@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <div id="twitterscript"></div>
+    <title>real dril?</title>
+    <style>
+    .visible {
+        display: block;
+    }
+    .hidden {
+        display: none;
+    }
+    #tweetbox {
+        padding: 5px 20px;
+        border-radius: 5px;
+        background-color: #cccccc;
+    }
+    button {
+        padding: 10px;
+        background-color: #dddddd;
+        border-radius: 5px;
+        border: 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="tweetbox">
+        <p id="tweet"></p>
+    </div>
+    <div id="question">
+        <p>do u think this a real tweet by @dril or is it from an ai? (50/50 chance)</p>
+        <button onclick="showAnswer(true)">it's dril</button>
+        <button onclick="showAnswer(false)">it's an ai</button>
+    </div>
+    <div id="answer">
+        <p id="answertext"></p>
+        <p id="stats"></p>
+        <button onclick="newTweet()">another one</button>
+        <div id="embeddiv"></div>
+        
+    </div>
+</body>
+
+<script src="dril.js"></script>
+<script src="dril_ai.js"></script>
+<script>
+
+function randomFromList(list) {
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+var tweet = '';
+var real = true;
+var guesses = 0
+var correct = 0
+
+function newTweet() {
+    document.getElementById('answer').className = "hidden";
+    document.getElementById('question').className = "visible";
+    if (Math.random() >= 0.5) {
+        real = true;
+        tweet = randomFromList(dril)
+    } else {
+        real = false;
+        tweet = randomFromList(dril_ai)
+    }
+    document.getElementById("tweet").innerHTML = tweet[0];
+    document.getElementById("embeddiv").innerHTML = '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"></p><a href="' + tweet[1] + '"></a></blockquote>'
+    document.getElementById("twitterscript").innerHTML = '';
+    var scriptdiv = document.getElementById('twitterscript');
+    scriptdiv.innerHTML = '';
+    var script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    scriptdiv.appendChild(script);
+}
+
+function showAnswer(guess) {
+    document.getElementById('question').className = "hidden";
+    document.getElementById('answer').className = "visible";
+    guesses += 1
+    if (real == guess) {
+        correct += 1
+        document.getElementById('answertext').innerHTML = "ur right. "
+    } else {
+        document.getElementById('answertext').innerHTML = "nope. "
+    }
+    if (real) {
+        document.getElementById('answertext').innerHTML += "this is from @dril."
+    } else {
+        document.getElementById('answertext').innerHTML += "this was written by an ai."
+    }
+    var stats = "u have gotten " + 
+        Math.round(100 * correct / guesses) + 
+        "% (" + correct + " out of " + guesses + ") correct."
+    document.getElementById('stats').innerHTML = stats
+}
+newTweet()
+</script>
+</html>
