@@ -1,19 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-  <meta name="Description" content="oof">
-  <title>oof</title>
-  <link rel="icon" href="favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin: 8%; }
-    img { max-width: 100%; display: block; margin: 10% auto; }
-  </style>
+    <meta charset="utf-8">
+    <title>meal plan math</title>
+    <link href="style.css" rel="stylesheet">
 </head>
+
+
 <body>
-<a href="https://www.instagram.com/gradysofficialmemes/" target="_blank">
-  <img src="grady1.jpg">
-</a>
+
+<div id="main">
+
+<p><i id="topMessage"></i></p>
+
+<!-- HEADING -->
+<h1>meal plan math</h1>
+
+<select name="month" id="month">
+<select name="day" id="day">
+    <input pattern="[0-9]*" type="text" name="creditcard">
+    
+</select>
+
+<div id="year-list"></div>
+
+<!-- LIST -->
+<div id="vote-list"></div>
+
+<script>
+const months = ["January", "Febuary", "March", "April", "May", "June", "July", 
+                "August", "September", "October", "November", "December"];
+var monthElement = document.getElementById("month");
+
+months.forEach(function(month) {
+    monthElement.innerHTML += `<option value="${month}">${month}</option>`;
+})
+
+document.getElementById("month").value = "November";
+</script>
+
 </body>
 </html>
+
